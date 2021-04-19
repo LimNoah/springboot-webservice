@@ -1,6 +1,5 @@
 package com.lnoah.portfolio.springboot.controller.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
