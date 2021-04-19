@@ -9,6 +9,7 @@
 - *Spring*
 - *Spring boot*
 - *JUnit 5*
+- *H2 Database*
 - *JPA*
 
 ## *Database 구조 < ERD >*
