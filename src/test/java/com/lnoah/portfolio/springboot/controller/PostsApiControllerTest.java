@@ -5,6 +5,7 @@ import com.lnoah.portfolio.springboot.model.posts.Posts;
 import com.lnoah.portfolio.springboot.repository.posts.PostsRepository;
 import org.junit.After;
 import org.junit.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +18,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -39,19 +39,20 @@ public class PostsApiControllerTest {
 
     @Test
     public void savePosts() {
+        //given
         String title = "title";
         String content = "content";
-
         PostsSaveRequestDto requestDto = PostsSaveRequestDto.builder()
                 .title(title)
                 .content(content)
                 .author("author")
                 .build();
-
         String url = "http://localhost:" + port + "/api/v1/posts";
 
+        //when
         ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
 
+        //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isGreaterThan(0L);
 
