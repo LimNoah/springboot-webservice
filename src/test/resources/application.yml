@@ -5,3 +5,8 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
         format_sql: true
+  h2:
+    console:
+      enabled: true
+  session:
+    store-type: jdbc
