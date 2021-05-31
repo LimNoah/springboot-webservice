@@ -40,6 +40,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         User user = saveOrUpdate(attributes);
 
         // SessionUser 클래스 => 세션에 사용자 정보를 저장하기 위한 DTO 클래스
+        // Session에 저장하는 용도로 User를 사용하지 않은 이유 = User는 Entity이며 직렬화를 구현하지 않아서 직렬화까지 구현한다면 나중에 직렬화 대상에 자식들까지 포홤되어
+        // 성능 이슈, 부수 효과가 발생할 확률이 높기 때문에 직렬화 기능을 가진 Sessint DTO를 추가로 만드는 것이 유지보수 때 도움이 되기 때문
         httpSession.setAttribute("user", new SessionUser(user));
 
         return new DefaultOAuth2User(
