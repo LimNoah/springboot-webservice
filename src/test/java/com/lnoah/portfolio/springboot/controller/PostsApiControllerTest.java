@@ -60,8 +60,8 @@ public class PostsApiControllerTest {
     }
 
     @DisplayName("게시글 작성")
-    @Test
     @WithMockUser(roles = "USER")
+    @Test
     public void savePosts() throws Exception {
         //given
         String title = "title";
@@ -99,8 +99,8 @@ public class PostsApiControllerTest {
     }
 
     @DisplayName("게시글 수정")
-    @Test
     @WithMockUser(roles = "USER")
+    @Test
     public void update() throws Exception{
         //given
         Posts savePosts = postsRepository.save(Posts.builder()
