@@ -1,11 +1,15 @@
 package com.lnoah.portfolio.springboot.controller;
 
+import com.lnoah.portfolio.springboot.config.auth.SecurityConfig;
+import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -17,8 +21,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(controllers = HelloController.class)
-class HelloControllerTest {
+@WebMvcTest(controllers = HelloController.class,
+        excludeFilters = {
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)
+        }
+)
+public class HelloControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -32,8 +40,9 @@ class HelloControllerTest {
     }
 
     @DisplayName("HelloTest")
+    @WithMockUser(roles = "USER")
     @Test
-    void hello() throws Exception {
+    public void hello() throws Exception {
         String hello = "hello";
 
         mockMvc.perform(MockMvcRequestBuilders.get("/hello"))
@@ -42,8 +51,9 @@ class HelloControllerTest {
     }
 
     @DisplayName("HelloDto 테스트")
+    @WithMockUser(roles = "USER")
     @Test
-    void helloDto() throws Exception {
+    public void helloDto() throws Exception {
         String name = "hello";
         int amount = 20000;
 
