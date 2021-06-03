@@ -26,15 +26,31 @@ public class OAuthAttributes {
 
     // OAuth2User에서 반환하는 사용자 정보는 Map 이기 때문에 값 하나하나를 변환해야만 한다.
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes){
+        OAuthAttributes oAuthAttributes = null;
         if("naver".equals(registrationId)){
-            return ofNaver("id", attributes);
+            oAuthAttributes = ofNaver("id", attributes);
+        } else if("google".equals(registrationId)){
+            oAuthAttributes = ofGoogle(userNameAttributeName, attributes);
+        } else if("kakao".equals(registrationId)){
+            oAuthAttributes = ofKakao("id", attributes);
         }
-        return ofGoogle(userNameAttributeName, attributes);
+        return oAuthAttributes;
+    }
+
+    private static OAuthAttributes ofKakao(String userNameAttributeName, Map<String, Object> attributes) {
+        Map<String, Object> response = (Map<String, Object>)attributes.get("kakao_account");
+        Map<String, Object> profile = (Map<String, Object>)response.get("profile");
+        return OAuthAttributes.builder()
+                .name((String) profile.get("nickname"))
+                .email((String) response.get("email"))
+                .picture((String) profile.get("profile_image_url"))
+                .attributes(attributes)
+                .nameAttributeKey(userNameAttributeName)
+                .build();
     }
 
     private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes) {
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");
-
         return OAuthAttributes.builder()
                 .name((String) response.get("name"))
                 .email((String) response.get("email"))
