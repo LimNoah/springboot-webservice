@@ -1,12 +1,15 @@
 package com.lnoah.portfolio.springboot.config.auth.dto;
 
 import com.lnoah.portfolio.springboot.model.user.Role;
+import com.lnoah.portfolio.springboot.model.user.SNS;
 import com.lnoah.portfolio.springboot.model.user.User;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.Map;
 
+@NoArgsConstructor
 @Getter
 public class OAuthAttributes {
     private Map<String, Object> attributes;
@@ -14,14 +17,16 @@ public class OAuthAttributes {
     private String name;
     private String email;
     private String picture;
+    private SNS sns;
 
     @Builder
-    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String picture){
+    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String picture, SNS sns){
         this.attributes = attributes;
         this.nameAttributeKey = nameAttributeKey;
         this.name = name;
         this.email = email;
         this.picture = picture;
+        this.sns = sns;
     }
 
     // OAuth2User에서 반환하는 사용자 정보는 Map 이기 때문에 값 하나하나를 변환해야만 한다.
@@ -46,6 +51,7 @@ public class OAuthAttributes {
                 .picture((String) profile.get("profile_image_url"))
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
+                .sns(SNS.KAKAO)
                 .build();
     }
 
@@ -57,6 +63,7 @@ public class OAuthAttributes {
                 .picture((String) response.get("profile_image"))
                 .attributes(response)
                 .nameAttributeKey(userNameAttributeName)
+                .sns(SNS.NAVER)
                 .build();
     }
 
@@ -67,6 +74,7 @@ public class OAuthAttributes {
                 .picture((String) attributes.get("picture"))
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
+                .sns(SNS.GOOGLE)
                 .build();
     }
 
@@ -77,6 +85,7 @@ public class OAuthAttributes {
                 .email(email)
                 .picture(picture)
                 .role(Role.USER)
+                .sns(sns)
                 .build();
     }
 }
