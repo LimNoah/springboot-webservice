@@ -55,7 +55,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     // 찾지 못했다면 OAuthAttribute의 정보들을 가지고 builder로 User객체를 만들어 준 뒤,
     // 해당 User 객체를 DB에 저장해주는 메소드.
     private User saveOrUpdate(OAuthAttributes attributes) {
-        User user =  userRepository.findByEmail(attributes.getEmail())
+        User user =  userRepository.findByEmailAndSns(attributes.getEmail(), attributes.getSns())
                 .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
                 .orElse(attributes.toEntity());
 
