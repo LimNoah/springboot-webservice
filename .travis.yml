@@ -6,6 +6,10 @@ branches:
   only:
     - main
 
+#gradlew에 실행권한이 없으므로 실행권한 부여
+before_install:
+  - chmod +x gradlew
+
 # Travis CI 서버의 Home
 cache:
   directories:
