@@ -31,7 +31,6 @@ deploy:
     wait-until-deployed: true
     on: # main 브랜치에 권한을 허용
       branch: main
-
   - provider: codedeploy
     access_key_id: $AWS_ACCESS_KEY # Travis repo settings에 설정된 값
     secret_access_key: $AWS_SECRET_KEY # Travis repo settings에 설정된 값
@@ -42,6 +41,8 @@ deploy:
     deployment_group: springboot-webservice-group # 웹 콘솔에서 등록한 CodeDeploy 배포 그룹
     region: ap-northeast-2
     wait-until-deployed: true
+    on:
+      branch: main
 
 #gradlew에 실행권한이 없으므로 실행권한 부여
 before_install:
