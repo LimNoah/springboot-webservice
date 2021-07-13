@@ -49,6 +49,9 @@ deploy:
     on:
       branch: main
 
+
+
+
 #gradlew에 실행권한이 없으므로 실행권한 부여
 before_install:
   - chmod +x gradlew
