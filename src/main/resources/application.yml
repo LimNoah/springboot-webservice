@@ -14,5 +14,3 @@ spring:
   session:
     store-type: jdbc
     timeout: 600
-server:
-  port: 80
